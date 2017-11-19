@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">ShortwayClient</string>
 
-    <!-- Strings related to login -->
+    <string name="login_key">user_login</string>>
+    <string name="password_key">user_password</string>>
+
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Пароль</string>
     <string name="action_sign_in">Ввійти</string>
