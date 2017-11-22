@@ -17,10 +17,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
         String login = preferences.getString(getString(R.string.login_key), null);
         String password = preferences.getString(getString(R.string.password_key), null);
+        preferences.getInt(getString(R.string.user_id_key), 0);
 
         Intent intent = new Intent();
 
-        if (login != null && password != null) {
+        if (login != null
+                && password != null) {
             intent.setClass(this, TripTypeChooserActivity.class);
         } else {
             intent.setClass(this, LoginActivity.class);

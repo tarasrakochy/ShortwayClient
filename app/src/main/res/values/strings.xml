@@ -3,6 +3,7 @@
 
     <string name="login_key">user_login</string>>
     <string name="password_key">user_password</string>>
+    <string name="user_id_key">user_id</string>>
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Пароль</string>
@@ -11,4 +12,5 @@
     <string name="error_invalid_email">Email невірний</string>
     <string name="error_incorrect_password">Некоректний пароль</string>
     <string name="error_field_required">Це поле обовязкове</string>
+    <string name="server_connection_error">Помилка доступу до сервера</string>
 </resources>
