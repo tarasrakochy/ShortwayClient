@@ -17,11 +17,15 @@ public class CallbackWrapper<T> implements Callback<T> {
     private Context context;
 
     private boolean failure;
+
     private T t;
+
+    private boolean flag;
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
         t = response.body();
+        flag = true;
     }
 
     @Override
@@ -29,6 +33,7 @@ public class CallbackWrapper<T> implements Callback<T> {
         failure = true;
         Toast.makeText(context, R.string.server_connection_error, Toast.LENGTH_SHORT).show();
         Log.e(TAG, t.getMessage());
+        flag = true;
     }
 
     public CallbackWrapper(Context context) {
@@ -36,10 +41,12 @@ public class CallbackWrapper<T> implements Callback<T> {
     }
 
     public T getResult() {
+        //while(!flag);
         return t;
     }
 
     public boolean isFailure() {
+        //while(!flag);
         return failure;
     }
 }

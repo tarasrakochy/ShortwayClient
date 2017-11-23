@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.taras.shortway.client.model.User;
 import com.taras.shortway.client.rest.ApiClient;
 import com.taras.shortway.client.rest.ApiInterface;
+import com.taras.shortway.client.rest.ApiService;
 import com.taras.shortway.client.rest.CallbackWrapper;
 
 import retrofit2.Call;
@@ -37,9 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final ApiInterface apiService = ApiClient
-                .getClient()
-                .create(ApiInterface.class);
+        final ApiService apiService = new ApiService(this);
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
@@ -51,12 +50,9 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<User> userCall = apiService.getUserFromLogin(mEmailView.getText().toString(), mPasswordView.getText().toString());
-                CallbackWrapper<User> userCallback = new CallbackWrapper<>(LoginActivity.this);
-                userCall.enqueue(userCallback);
-                user = userCallback.getResult();
+                user = apiService.getUserFromLogin(mEmailView.getText().toString(), mPasswordView.getText().toString());
 
-                if (user == null && !userCallback.isFailure()) {
+                if (user == null && !apiService.isFailure()) {
                     mEmailView.setText("");
                     mPasswordView.setText("");
                     mPasswordView.setError(getString(R.string.error_incorrect_password));
