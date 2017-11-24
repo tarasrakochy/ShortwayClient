@@ -9,6 +9,8 @@ import android.widget.Button;
 
 public class TripTypeChooserActivity extends AppCompatActivity {
 
+    private Button findTripButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,15 +20,6 @@ public class TripTypeChooserActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-                preferences
-                        .edit()
-                        .remove(getString(R.string.login_key))
-                        .remove(getString(R.string.password_key))
-                        .remove(getString(R.string.user_id_key))
-                        .apply();
-                Intent intent = new Intent(TripTypeChooserActivity.this, LoginActivity.class);
-                startActivity(intent);
             }
         });
     }
