@@ -23,8 +23,6 @@ public class Trip {
 
     private Date time;
 
-    private List<Integer> passangers;
-
     private User driver;
 
     private List<String> transitionals;

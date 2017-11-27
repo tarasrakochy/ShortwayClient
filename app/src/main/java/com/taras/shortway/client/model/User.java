@@ -25,6 +25,4 @@ public class User {
     private Auto auto;
 
     private UserInfo userInfo;
-
-    private List<Integer> trips;
 }
