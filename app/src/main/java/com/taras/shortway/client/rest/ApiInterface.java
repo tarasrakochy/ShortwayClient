@@ -33,4 +33,12 @@ public interface ApiInterface {
     @GET("/trips/{id}")
     Call<Trip> getTripById(@Path("id") int id);
 
+    @GET("/users/{id}/trips")
+    Call<List<Trip>> getTripsForUser(@Path("id") int id, @Query("driver") boolean isDriver);
+
+    @GET("/trips/{id}/passengers")
+    Call<List<User>> getPassengers(@Path("id") int id);
+
+    @GET("/trips/{id}/driver")
+    Call<User> getDriver(@Path("id") int id);
 }

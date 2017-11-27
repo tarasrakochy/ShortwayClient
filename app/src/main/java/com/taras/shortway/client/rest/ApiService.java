@@ -39,7 +39,7 @@ public class ApiService {
 
     private <T> T handleCall(Call<T> call) {
         try {
-            Response<T> response =  call.execute();
+            Response<T> response = call.execute();
             if (response.isSuccessful()) {
                 failure = false;
                 return response.body();
@@ -47,7 +47,7 @@ public class ApiService {
                 failure = true;
                 Toast.makeText(context, R.string.server_connection_error, Toast.LENGTH_SHORT).show();
             }
-        } catch (SocketTimeoutException|ConnectException e) {
+        } catch (SocketTimeoutException | ConnectException e) {
             failure = true;
             Toast.makeText(context, R.string.server_connection_error, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
@@ -57,39 +57,53 @@ public class ApiService {
     }
 
 
-
-    public User getUserFromLogin(String login, String password){
+    public User getUserFromLogin(String login, String password) {
         Call<User> userCall = apiInterface.getUserFromLogin(login, password);
         return handleCall(userCall);
     }
 
-    public List<Auto> getAutos(){
+    public List<Auto> getAutos() {
         Call<List<Auto>> autosListCall = apiInterface.getAutos();
         return handleCall(autosListCall);
     }
-    
-    public Auto getAutoById(int id){
+
+    public Auto getAutoById(int id) {
         Call<Auto> autoCall = apiInterface.getAutoById(id);
         return handleCall(autoCall);
     }
-    
-    public List<User> getUsers(){
+
+    public List<User> getUsers() {
         Call<List<User>> usersListCall = apiInterface.getUsers();
         return handleCall(usersListCall);
     }
-    
-    public User getUserById(int id){
+
+    public User getUserById(int id) {
         Call<User> userCall = apiInterface.getUserById(id);
         return handleCall(userCall);
     }
-    
-    public List<Trip> getTrips(){
+
+    public List<Trip> getTrips() {
         Call<List<Trip>> tripsListCall = apiInterface.getTrips();
         return handleCall(tripsListCall);
     }
-    
-    public Trip getTripById(int id){
+
+    public Trip getTripById(int id) {
         Call<Trip> tripCall = apiInterface.getTripById(id);
         return handleCall(tripCall);
+    }
+
+    public List<Trip> getTripsForUser(int id, boolean isDriver) {
+        Call<List<Trip>> tripsListCall = apiInterface.getTripsForUser(id, isDriver);
+        return handleCall(tripsListCall);
+    }
+
+    public List<User> getPassengers(int id) {
+        Call<List<User>> passengersCall = apiInterface.getPassengers(id);
+        return handleCall(passengersCall);
+    }
+
+    public User getDriver(int id) {
+        Call<User> driverCall = apiInterface.getDriver(id);
+        return handleCall(driverCall);
     }
 }
