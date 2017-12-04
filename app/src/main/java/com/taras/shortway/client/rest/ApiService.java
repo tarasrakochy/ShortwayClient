@@ -106,4 +106,30 @@ public class ApiService {
         Call<User> driverCall = apiInterface.getDriver(id);
         return handleCall(driverCall);
     }
+
+    public Boolean addUser(User user) {
+        Call<Boolean> resultCall = apiInterface.addUser(user);
+        return handleCall(resultCall);
+    }
+
+    public Boolean editUser(User user) {
+        Call<Boolean> resultCall = apiInterface.editUser(user);
+        return handleCall(resultCall);
+    }
+
+    public List<Trip> getTripsForConditions(Trip trip) {
+        Call<List<Trip>> tripsListCall = apiInterface.getTripsForConditions(trip);
+        return handleCall(tripsListCall);
+    }
+
+    public Boolean addTrip(Trip trip, int userId) {
+        Call<Boolean> resultCall = apiInterface.addTrip(trip, userId);
+        return handleCall(resultCall);
+    }
+
+    public Boolean acceptTrip(int userId, int id, String fromPoint, String toPoint) {
+        Call<Boolean> resultCall = apiInterface.acceptTrip(userId, id, fromPoint, toPoint);
+        return handleCall(resultCall);
+    }
+
 }

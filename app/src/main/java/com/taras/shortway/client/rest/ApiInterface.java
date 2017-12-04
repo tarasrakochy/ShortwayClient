@@ -7,7 +7,10 @@ import com.taras.shortway.client.model.User;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -41,4 +44,19 @@ public interface ApiInterface {
 
     @GET("/trips/{id}/driver")
     Call<User> getDriver(@Path("id") int id);
+
+    @POST("/users/newuser")
+    Call<Boolean> addUser(@Body User user);
+
+    @PUT("/users/{id}/edit")
+    Call<Boolean> editUser(@Body User user);
+
+    @POST("/trips/suitable")
+    Call<List<Trip>> getTripsForConditions(@Body Trip trip);
+
+    @POST(value = "/trips/newtrip")
+    public Call<Boolean> addTrip(@Body Trip trip, @Query("userId") int userId);
+
+    @POST(value = "/trips/{id}/accept")
+    public Call<Boolean> acceptTrip(@Query("userId") int userId, @Path("id") int id, @Query("fromPoint") String fromPoint, @Query("toPoint") String toPoint);
 }
