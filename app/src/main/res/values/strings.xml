@@ -16,5 +16,15 @@
 
     <string name="find_trip_button_text">Знайти поїздку</string>>
     <string name="suggest_trip_button_text">Запропонувати поїздку</string>
+    <string name="invalid_data_for_searching_trips">Введено невірні дані</string>
+
+    <string name="from_field_find_trip_hint">Звідки</string>
+    <string name="to_field_find_trip_hint">Куди</string>
+    <string name="date_field_find_trip_hint">Дата</string>
+    <string name="time_field_find_trip_hint">Час</string>
+    <string name="find_trip_for_parameters_button_text">Знайти поїздку</string>
+
+    <string name="accept_trip_success">Поїздку підтверджено</string>
+    <string name="accept_trip_fail">Поїздку не підтверджено</string>
 
 </resources>

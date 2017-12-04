@@ -1,5 +1,6 @@
 package com.taras.shortway.client.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Trip {
+public class Trip implements Serializable {
 
     private int id;
 

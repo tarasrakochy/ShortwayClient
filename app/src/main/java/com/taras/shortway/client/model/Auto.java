@@ -1,5 +1,7 @@
 package com.taras.shortway.client.model;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Auto {
+public class Auto implements Serializable {
 
     private int id;
 

@@ -16,11 +16,22 @@ public class TripTypeChooserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_type_chooser);
 
-//        Button button = (Button) findViewById(R.id.log_out_button);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            }
-//        });
+        Button findTripButton = (Button) findViewById(R.id.find_trip_button);
+        findTripButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TripTypeChooserActivity.this, FindTripActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button suggestTripButton = (Button) findViewById(R.id.suggest_trip_button);
+        suggestTripButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TripTypeChooserActivity.this, SuggestTripActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
