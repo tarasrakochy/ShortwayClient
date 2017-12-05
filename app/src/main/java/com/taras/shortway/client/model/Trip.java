@@ -19,7 +19,7 @@ public class Trip implements Serializable {
     private String fromPoint;
 
     private String toPoint;
-
+    
     private Date date;
 
     private Date time;
