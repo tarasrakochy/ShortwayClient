@@ -24,7 +24,7 @@ public class Trip implements Serializable {
 
     private Date time;
 
-    private User driver;
+    private int price;
 
     private List<String> transitionals;
 }

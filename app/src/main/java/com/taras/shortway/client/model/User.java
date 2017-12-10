@@ -17,6 +17,10 @@ public class User implements Serializable {
 
     private byte[] avatar;
 
+    private String name;
+
+    private String surname;
+
     private String phone;
 
     private String email;

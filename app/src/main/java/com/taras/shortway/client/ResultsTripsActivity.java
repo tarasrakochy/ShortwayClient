@@ -18,12 +18,18 @@ import android.widget.Toast;
 
 import com.taras.shortway.client.model.Trip;
 import com.taras.shortway.client.model.User;
+import com.taras.shortway.client.model.UserInfo;
+import com.taras.shortway.client.model.enums.Gender;
 import com.taras.shortway.client.rest.ApiService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ResultsTripsActivity extends AppCompatActivity {
 
@@ -40,6 +46,8 @@ public class ResultsTripsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results_trips);
 
+        setTitle("Знайдені поїздки");
+
         apiService = new ApiService(this);
 
         trip = (Trip) getIntent().getSerializableExtra(EXTRA_KEY);
@@ -47,11 +55,53 @@ public class ResultsTripsActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.find_trips_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<Trip> tripList = apiService.getTripsForConditions(trip);
+        //trip.setTime(null);
+        trip.setDate(null);
+        //trip.setTransitionals(new ArrayList<String>());
+        //List<Trip> tripList = apiService.getTripsForConditions(trip);
+
+        List<Trip> tripList = new ArrayList<>();
+
+        Trip trip = new Trip();
+        trip.setId(1);
+        trip.setDate(new Date());
+        trip.setTime(new Date());
+        trip.setFromPoint("Городоцька");
+        trip.setToPoint("Наукова");
+        tripList.add(trip);
+
+        Trip trip2 = new Trip();
+        trip2.setId(2);
+        trip2.setDate(new Date());
+        trip2.setTime(new Date());
+        trip2.setFromPoint("Кульпарківська");
+        trip2.setToPoint("Зелена");
+        tripList.add(trip2);
+
         List<User> driverList = new ArrayList<>();
-        for (Trip trip : tripList) {
-            driverList.add(apiService.getDriver(trip.getId()));
-        }
+//        for (Trip trip : tripList) {
+//            driverList.add(apiService.getDriver(trip.getId()));
+//        }
+        User user = new User();
+        user.setId(10);
+        user.setEmail("email");
+        user.setPhone("097");
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(1);
+        userInfo.setGender(Gender.MALE);
+        userInfo.setYear(1995);
+        user.setUserInfo(userInfo);
+        driverList.add(user);
+
+        User user2 = new User();
+        user2.setId(11);
+        user2.setEmail("email2");
+        user2.setPhone("098");
+        UserInfo userInfo1 = new UserInfo();
+        userInfo1.setId(2);
+        userInfo1.setYear(1986);
+        user2.setUserInfo(userInfo1);
+        driverList.add(user2);
 
         RecyclerView.Adapter tripAdapter = new TripAdapter(tripList, driverList);
         recyclerView.setAdapter(tripAdapter);
@@ -66,11 +116,12 @@ public class ResultsTripsActivity extends AppCompatActivity {
 
         private Trip trip;
 
+        private TextView dateInfoField;
         private TextView timeInfoField;
         private TextView streetsInfoField;
         private TextView costInfoField;
 
-        private ImageView userAvatar;
+        private CircleImageView userAvatar;
         private TextView minUserInfo;
 
         private Button acceptTripButton;
@@ -78,14 +129,15 @@ public class ResultsTripsActivity extends AppCompatActivity {
         public TripHolder(View itemView) {
             super(itemView);
 
-            timeInfoField = (TextView) findViewById(R.id.time_info_for_trip);
-            streetsInfoField = (TextView) findViewById(R.id.streets_info_for_trip);
-            costInfoField = (TextView) findViewById(R.id.cost_info_for_trip);
+            dateInfoField = (TextView) itemView.findViewById(R.id.date_info_for_trip);
+            timeInfoField = (TextView) itemView.findViewById(R.id.time_info_for_trip);
+            streetsInfoField = (TextView) itemView.findViewById(R.id.streets_info_for_trip);
+            costInfoField = (TextView) itemView.findViewById(R.id.cost_info_for_trip);
 
-            userAvatar = (ImageView) findViewById(R.id.user_avatar_for_trip);
-            minUserInfo = (TextView) findViewById(R.id.min_user_info_for_trip);
+            userAvatar = (CircleImageView) itemView.findViewById(R.id.user_avatar_for_trip);
+            minUserInfo = (TextView) itemView.findViewById(R.id.min_user_info_for_trip);
 
-            acceptTripButton = (Button) findViewById(R.id.accept_trip_button);
+            acceptTripButton = (Button) itemView.findViewById(R.id.accept_trip_button);
             acceptTripButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -102,13 +154,14 @@ public class ResultsTripsActivity extends AppCompatActivity {
 
         public void bindTrip(Trip trip, User user) {
             this.trip = trip;
-            timeInfoField.setText(trip.getTime().toString());
+            dateInfoField.setText(new SimpleDateFormat("dd-MM-yyyy").format(trip.getDate()));
+            timeInfoField.setText(new SimpleDateFormat("HH:mm").format(trip.getDate()));
             streetsInfoField.setText(trip.getFromPoint() + " - " + trip.getToPoint());
             costInfoField.setText("15");
             minUserInfo.setText(ResultsTripsActivity.this.getShortUserInfo(user));
 
-            Bitmap bitmap = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
-            userAvatar.setImageBitmap(bitmap);
+//            Bitmap bitmap = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
+//            userAvatar.setImageBitmap(bitmap);
         }
     }
 
@@ -125,7 +178,7 @@ public class ResultsTripsActivity extends AppCompatActivity {
         @Override
         public TripHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(ResultsTripsActivity.this);
-            View v = inflater.inflate(R.layout.trips_item, parent);
+            View v = inflater.inflate(R.layout.trips_item, parent, false);
             return new TripHolder(v);
         }
 

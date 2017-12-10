@@ -33,6 +33,14 @@
         </activity>
         <activity android:name=".ResultsTripsActivity">
         </activity>
+        <activity android:name=".RegistrationActivity">
+        </activity>
+        <activity
+            android:name=".UserProfileActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity android:name=".EditInfoActivity">
+        </activity>
     </application>
 
 </manifest>

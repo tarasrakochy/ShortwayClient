@@ -55,8 +55,8 @@ public interface ApiInterface {
     Call<List<Trip>> getTripsForConditions(@Body Trip trip);
 
     @POST(value = "/trips/newtrip")
-    public Call<Boolean> addTrip(@Body Trip trip, @Query("userId") int userId);
+    Call<Boolean> addTrip(@Body Trip trip, @Query("userId") int userId);
 
-    @POST(value = "/trips/{id}/accept")
-    public Call<Boolean> acceptTrip(@Query("userId") int userId, @Path("id") int id, @Query("fromPoint") String fromPoint, @Query("toPoint") String toPoint);
+    @PUT(value = "/trips/{id}/accept")
+    Call<Boolean> acceptTrip(@Path("id") int id, @Query("userId") int userId, @Query("fromPoint") String fromPoint, @Query("toPoint") String toPoint);
 }

@@ -22,9 +22,37 @@
     <string name="to_field_find_trip_hint">Куди</string>
     <string name="date_field_find_trip_hint">Дата</string>
     <string name="time_field_find_trip_hint">Час</string>
+    <string name="price_field_find_trip_hint">Ціна</string>
     <string name="find_trip_for_parameters_button_text">Знайти поїздку</string>
+    <string name="add_transitional_points_button_text">Додати проміжні точки</string>
+
+    <string name="accept_trip_button_text">Підтвердити поїздку</string>
 
     <string name="accept_trip_success">Поїздку підтверджено</string>
     <string name="accept_trip_fail">Поїздку не підтверджено</string>
 
+    <string name="gender">Стать</string>
+    <string name="name">Імя</string>
+    <string name="surname">Прізвище</string>
+    <string name="year_of_birth">Рік народження</string>
+    <string name="login">Логін</string>
+    <string name="phone">Телефон</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль(не менше 8 символів)</string>
+    <string name="accept_registration_button_text">Зареєструватися</string>
+
+    <string-array name="genders">
+        <item>Чоловіча</item>
+        <item>Жіноча</item>
+    </string-array>
+
+    <string name="user_registrated_info">Користувача зареєстровано</string>
+
+    <string name="myself_user_profile">Про себе:</string>
+
+    <string name="edit_info_text">Змінити інформацію</string>
+
+    <string name="choose_photo">Вибрати фото</string>
+    <string name="myself_edit_text">Про себе</string>
+    <string name="save_changes">Зберегти зміни</string>
 </resources>

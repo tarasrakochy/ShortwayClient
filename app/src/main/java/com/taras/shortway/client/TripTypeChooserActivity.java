@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class TripTypeChooserActivity extends AppCompatActivity {
 
@@ -30,6 +31,15 @@ public class TripTypeChooserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TripTypeChooserActivity.this, SuggestTripActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView goToProfileButton = (ImageView) findViewById(R.id.go_to_profile);
+        goToProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TripTypeChooserActivity.this, UserProfileActivity.class);
                 startActivity(intent);
             }
         });

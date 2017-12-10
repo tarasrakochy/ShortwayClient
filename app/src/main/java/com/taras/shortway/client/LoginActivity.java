@@ -19,9 +19,7 @@ import com.taras.shortway.client.rest.CallbackWrapper;
 
 import retrofit2.Call;
 
-/**
- * A login screen that offers login via email/password.
- */
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getName();
@@ -66,8 +64,18 @@ public class LoginActivity extends AppCompatActivity {
                             .putInt(getString(R.string.password_key), user.getId())
                             .apply();
 
+                    Globals.setUser(user);
                     startNextActivity();
                 }
+            }
+        });
+
+        Button registrationButton = (Button) findViewById(R.id.email_registration_button);
+        registrationButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(intent);
             }
         });
 
