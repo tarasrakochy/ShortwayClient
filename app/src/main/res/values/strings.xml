@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ShortwayClient</string>
+    <string name="app_name">EasyTrip</string>
 
     <string name="login_key">user_login</string>>
     <string name="password_key">user_password</string>>
