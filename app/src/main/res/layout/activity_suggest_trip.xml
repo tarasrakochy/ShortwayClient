@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/buttonstyle"
-                android:text="@string/find_trip_for_parameters_button_text"
+                android:text="@string/suggest_trip_for_parameters_button_text"
                 android:textColor="@color/white"/>
         </LinearLayout>
     </ScrollView>

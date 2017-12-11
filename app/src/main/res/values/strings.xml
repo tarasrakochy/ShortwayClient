@@ -25,6 +25,7 @@
     <string name="price_field_find_trip_hint">Ціна</string>
     <string name="pcount_field_find_trip_hint">Максимальна к-сть пасажирів</string>
     <string name="find_trip_for_parameters_button_text">Знайти поїздку</string>
+    <string name="suggest_trip_for_parameters_button_text">Запропонувати поїздку</string>
     <string name="add_transitional_points_button_text">Додати проміжні точки</string>
 
     <string name="accept_trip_button_text">Підтвердити поїздку</string>
