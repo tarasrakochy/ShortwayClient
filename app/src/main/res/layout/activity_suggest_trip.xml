@@ -64,6 +64,13 @@
                 android:hint="@string/price_field_find_trip_hint"
                 android:inputType="number"/>
 
+            <EditText
+                android:id="@+id/pcount_field_suggest_trip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pcount_field_find_trip_hint"
+                android:inputType="number"/>
+
             <Button
                 android:id="@+id/add_transitional_points_button"
                 android:layout_width="250dp"

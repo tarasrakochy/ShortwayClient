@@ -1,5 +1,8 @@
 package com.taras.shortway.client.model;
 
+import com.google.gson.annotations.JsonAdapter;
+import com.taras.shortway.client.utils.ByteArrayDeserializer;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ public class User implements Serializable {
 
     private int id;
 
+    @JsonAdapter(ByteArrayDeserializer.class)
     private byte[] avatar;
 
     private String name;
@@ -26,8 +30,6 @@ public class User implements Serializable {
     private String email;
 
     private LoginPass loginPass;
-
-    private Auto auto;
 
     private UserInfo userInfo;
 }

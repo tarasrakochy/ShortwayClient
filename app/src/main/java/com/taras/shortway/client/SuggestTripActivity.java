@@ -12,8 +12,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.taras.shortway.client.model.Trip;
+import com.taras.shortway.client.rest.ApiService;
 import com.taras.shortway.client.utils.GoogleMapsUtils;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +36,8 @@ public class SuggestTripActivity extends AppCompatActivity {
 
         setTitle("Запропонувати поїздку");
 
+        final ApiService apiService = new ApiService(this);
+
         final Calendar calendar = Calendar.getInstance();
 
 
@@ -41,6 +45,8 @@ public class SuggestTripActivity extends AppCompatActivity {
         final EditText fromField = (EditText) findViewById(R.id.from_field_suggest_trip);
         final EditText toField = (EditText) findViewById(R.id.to_field_suggest_trip);
         final EditText timeField = (EditText) findViewById(R.id.time_field_suggest_trip);
+        final EditText priceField = (EditText) findViewById(R.id.price_field_suggest_trip);
+        final EditText countField = (EditText) findViewById(R.id.pcount_field_suggest_trip);
 
         Button addTransitionalPointsButton = (Button) findViewById(R.id.add_transitional_points_button);
 
@@ -143,7 +149,17 @@ public class SuggestTripActivity extends AppCompatActivity {
                     trip.setToPoint(GoogleMapsUtils.convertToLatLngString(toField.getText().toString()));
                     trip.setDate(calendarDate);
                     trip.setTransitionals(transitionalPoints);
-                    //TODO server  request
+                    trip.setPassengersMaxCount(Integer.parseInt(countField.getText().toString()));
+                    trip.setPrice(Integer.parseInt(priceField.getText().toString()));
+
+                    boolean success = apiService.addTrip(trip, Globals.getUser().getId());
+                    if (success) {
+                        Toast.makeText(SuggestTripActivity.this, R.string.add_trip_success, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SuggestTripActivity.this, TripTypeChooserActivity.class));
+                    } else {
+                        Toast.makeText(SuggestTripActivity.this, R.string.add_trip_fail, Toast.LENGTH_SHORT).show();
+                    }
+
 
                 } else {
                     if (fromPoint == null) {

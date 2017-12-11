@@ -13,8 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.taras.shortway.client.model.LoginPass;
 import com.taras.shortway.client.model.User;
+import com.taras.shortway.client.model.UserInfo;
 import com.taras.shortway.client.model.enums.Gender;
+import com.taras.shortway.client.rest.ApiService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -31,6 +34,7 @@ public class EditInfoActivity extends AppCompatActivity {
     private static final String[] genders = {"Чоловіча", "Жіноча"};
 
     private User user;
+    private User changedUser;
 
     private AutoCompleteTextView gender;
     private EditText nameForEdit;
@@ -46,12 +50,19 @@ public class EditInfoActivity extends AppCompatActivity {
 
     private Button saveChangesButton;
 
+    private ApiService apiService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_info);
 
         setTitle("Редагування");
+
+        apiService = new ApiService(this);
+        user = Globals.getUser();
+        changedUser = new User();
+        changedUser.setId(user.getId());
 
         gender = (AutoCompleteTextView) findViewById(R.id.gender_edit);
         nameForEdit = (EditText) findViewById(R.id.name_for_edit);
@@ -67,8 +78,6 @@ public class EditInfoActivity extends AppCompatActivity {
 
         saveChangesButton = (Button) findViewById(R.id.save_changes_button);
 
-        user = Globals.getUser();
-
         if (user.getAvatar() != null) {
             Bitmap bmp = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
             avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, avatar.getWidth(), avatar.getHeight(), false));
@@ -76,7 +85,7 @@ public class EditInfoActivity extends AppCompatActivity {
 
         if (user.getUserInfo() != null) {
             gender.setText(user.getUserInfo().getGender() == Gender.MALE ? "Чоловіча" : "Жіноча");
-            yearOfBirth.setText(user.getUserInfo().getYear());
+            yearOfBirth.setText(user.getUserInfo().getYear() + "");
             myselfInfo.setText(user.getUserInfo().getInformation());
         }
         nameForEdit.setText(user.getName());
@@ -84,11 +93,6 @@ public class EditInfoActivity extends AppCompatActivity {
         login.setText(user.getLoginPass().getLogin());
         phone.setText(user.getPhone());
         email.setText(user.getEmail());
-
-//        user.setName(nameForEdit.getText().toString());
-//        user.setSurname(surnameForEdit.getText().toString());
-//        user.setPhone(phone.getText().toString());
-//        user.setEmail(email.getText().toString());
 
         ArrayAdapter<String> genderArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, genders);
         gender.setAdapter(genderArrayAdapter);
@@ -120,7 +124,31 @@ public class EditInfoActivity extends AppCompatActivity {
         saveChangesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO server request
+
+                changedUser.setName(nameForEdit.getText().toString());
+                changedUser.setSurname(surnameForEdit.getText().toString());
+                changedUser.setPhone(phone.getText().toString());
+                changedUser.setEmail(email.getText().toString());
+
+                LoginPass loginPass = user.getLoginPass();
+                loginPass.setLogin(login.getText().toString());
+                changedUser.setLoginPass(loginPass);
+
+                UserInfo userInfo = new UserInfo();
+                userInfo.setGender(gender.getText().toString().equals("Чоловіча") ? Gender.MALE : Gender.FEMALE);
+                userInfo.setYear(Integer.parseInt(yearOfBirth.getText().toString()));
+                userInfo.setInformation(myselfInfo.getText().toString());
+                changedUser.setUserInfo(userInfo);
+
+                User newUser = apiService.editUser(changedUser);
+                if (newUser != null) {
+                    Globals.setUser(newUser);
+                    Toast.makeText(EditInfoActivity.this, R.string.user_changed_info, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EditInfoActivity.this, UserProfileActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(EditInfoActivity.this, R.string.edit_fail, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -141,9 +169,9 @@ public class EditInfoActivity extends AppCompatActivity {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 5, stream);
                     byte[] byteArray = stream.toByteArray();
-                    //TODO server request
+                    changedUser.setAvatar(byteArray);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

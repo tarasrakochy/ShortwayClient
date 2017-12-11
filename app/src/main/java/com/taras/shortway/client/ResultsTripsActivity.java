@@ -21,6 +21,7 @@ import com.taras.shortway.client.model.User;
 import com.taras.shortway.client.model.UserInfo;
 import com.taras.shortway.client.model.enums.Gender;
 import com.taras.shortway.client.rest.ApiService;
+import com.taras.shortway.client.utils.GoogleMapsUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,10 +42,14 @@ public class ResultsTripsActivity extends AppCompatActivity {
 
     private ApiService apiService;
 
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results_trips);
+
+        user = Globals.getUser();
 
         setTitle("Знайдені поїздки");
 
@@ -55,54 +60,49 @@ public class ResultsTripsActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.find_trips_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //trip.setTime(null);
-        trip.setDate(null);
-        //trip.setTransitionals(new ArrayList<String>());
-        //List<Trip> tripList = apiService.getTripsForConditions(trip);
+        List<Trip> tripList = apiService.getTripsForConditions(trip);
 
-        List<Trip> tripList = new ArrayList<>();
-
-        Trip trip = new Trip();
-        trip.setId(1);
-        trip.setDate(new Date());
-        trip.setTime(new Date());
-        trip.setFromPoint("Городоцька");
-        trip.setToPoint("Наукова");
-        tripList.add(trip);
-
-        Trip trip2 = new Trip();
-        trip2.setId(2);
-        trip2.setDate(new Date());
-        trip2.setTime(new Date());
-        trip2.setFromPoint("Кульпарківська");
-        trip2.setToPoint("Зелена");
-        tripList.add(trip2);
-
+//        List<Trip> tripList = new ArrayList<>();
+//
+//        Trip trip = new Trip();
+//        trip.setId(1);
+//        trip.setDate(new Date());
+//        trip.setFromPoint("Городоцька");
+//        trip.setToPoint("Наукова");
+//        tripList.add(trip);
+//
+//        Trip trip2 = new Trip();
+//        trip2.setId(2);
+//        trip2.setDate(new Date());
+//        trip2.setFromPoint("Кульпарківська");
+//        trip2.setToPoint("Зелена");
+//        tripList.add(trip2);
+//
         List<User> driverList = new ArrayList<>();
-//        for (Trip trip : tripList) {
-//            driverList.add(apiService.getDriver(trip.getId()));
-//        }
-        User user = new User();
-        user.setId(10);
-        user.setEmail("email");
-        user.setPhone("097");
-        UserInfo userInfo = new UserInfo();
-        userInfo.setId(1);
-        userInfo.setGender(Gender.MALE);
-        userInfo.setYear(1995);
-        user.setUserInfo(userInfo);
-        driverList.add(user);
-
-        User user2 = new User();
-        user2.setId(11);
-        user2.setEmail("email2");
-        user2.setPhone("098");
-        UserInfo userInfo1 = new UserInfo();
-        userInfo1.setId(2);
-        userInfo1.setYear(1986);
-        user2.setUserInfo(userInfo1);
-        driverList.add(user2);
-
+        for (Trip trip : tripList) {
+            driverList.add(apiService.getDriver(trip.getId()));
+        }
+//        User user = new User();
+//        user.setId(10);
+//        user.setEmail("email");
+//        user.setPhone("097");
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setId(1);
+//        userInfo.setGender(Gender.MALE);
+//        userInfo.setYear(1995);
+//        user.setUserInfo(userInfo);
+//        driverList.add(user);
+//
+//        User user2 = new User();
+//        user2.setId(11);
+//        user2.setEmail("email2");
+//        user2.setPhone("098");
+//        UserInfo userInfo1 = new UserInfo();
+//        userInfo1.setId(2);
+//        userInfo1.setYear(1986);
+//        user2.setUserInfo(userInfo1);
+//        driverList.add(user2);
+//
         RecyclerView.Adapter tripAdapter = new TripAdapter(tripList, driverList);
         recyclerView.setAdapter(tripAdapter);
 
@@ -141,7 +141,7 @@ public class ResultsTripsActivity extends AppCompatActivity {
             acceptTripButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int userId = getPreferences(Context.MODE_PRIVATE).getInt(getString(R.string.user_id_key), 0);
+                    int userId = user.getId();
                     boolean success = apiService.acceptTrip(userId, trip.getId(), trip.getFromPoint(), trip.getToPoint());
                     Toast.makeText(ResultsTripsActivity.this, success ? R.string.accept_trip_success : R.string.accept_trip_fail, Toast.LENGTH_SHORT).show();
                     if (success) {
@@ -156,12 +156,14 @@ public class ResultsTripsActivity extends AppCompatActivity {
             this.trip = trip;
             dateInfoField.setText(new SimpleDateFormat("dd-MM-yyyy").format(trip.getDate()));
             timeInfoField.setText(new SimpleDateFormat("HH:mm").format(trip.getDate()));
-            streetsInfoField.setText(trip.getFromPoint() + " - " + trip.getToPoint());
-            costInfoField.setText("15");
+            streetsInfoField.setText(GoogleMapsUtils.convertToString(trip.getFromPoint()) + " - " + GoogleMapsUtils.convertToString(trip.getToPoint()));
+            costInfoField.setText(trip.getPrice());
             minUserInfo.setText(ResultsTripsActivity.this.getShortUserInfo(user));
 
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
-//            userAvatar.setImageBitmap(bitmap);
+            if (user.getAvatar() != null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
+                userAvatar.setImageBitmap(bitmap);
+            }
         }
     }
 
@@ -197,9 +199,13 @@ public class ResultsTripsActivity extends AppCompatActivity {
     }
 
     private String getShortUserInfo(User user) {
-        String name = "Mykola";
-        String lastNameShort = "M";
-        int years = Calendar.getInstance().get(Calendar.YEAR) - user.getUserInfo().getYear();
-        return String.format(Locale.getDefault(), "%s %s (%d р.)", name, lastNameShort, years);
+        String name = user.getName();
+        String lastName = user.getSurname();
+        if (user.getUserInfo() != null) {
+            int years = Calendar.getInstance().get(Calendar.YEAR) - user.getUserInfo().getYear();
+            return String.format(Locale.getDefault(), "%s %s (%d р.)", name, lastName, years);
+        } else {
+            return String.format(Locale.getDefault(), "%s %s", name, lastName);
+        }
     }
 }

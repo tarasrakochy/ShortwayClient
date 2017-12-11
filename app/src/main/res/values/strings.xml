@@ -23,6 +23,7 @@
     <string name="date_field_find_trip_hint">Дата</string>
     <string name="time_field_find_trip_hint">Час</string>
     <string name="price_field_find_trip_hint">Ціна</string>
+    <string name="pcount_field_find_trip_hint">Максимальна к-сть пасажирів</string>
     <string name="find_trip_for_parameters_button_text">Знайти поїздку</string>
     <string name="add_transitional_points_button_text">Додати проміжні точки</string>
 
@@ -30,6 +31,9 @@
 
     <string name="accept_trip_success">Поїздку підтверджено</string>
     <string name="accept_trip_fail">Поїздку не підтверджено</string>
+
+    <string name="add_trip_success">Поїздку додано</string>
+    <string name="add_trip_fail">Поїздку не додано</string>
 
     <string name="gender">Стать</string>
     <string name="name">Імя</string>
@@ -47,6 +51,7 @@
     </string-array>
 
     <string name="user_registrated_info">Користувача зареєстровано</string>
+    <string name="user_changed_info">Інформацію про користувача змінено</string>
 
     <string name="myself_user_profile">Про себе:</string>
 
@@ -55,4 +60,7 @@
     <string name="choose_photo">Вибрати фото</string>
     <string name="myself_edit_text">Про себе</string>
     <string name="save_changes">Зберегти зміни</string>
+
+    <string name="edit_fail">Не вдалось редагувати інформацію про користувача</string>
+    <string name="registration_fail">Не вдалось зареєструвати про користувача</string>
 </resources>

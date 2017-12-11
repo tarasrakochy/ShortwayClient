@@ -5,7 +5,6 @@ import android.os.StrictMode;
 import android.widget.Toast;
 
 import com.taras.shortway.client.R;
-import com.taras.shortway.client.model.Auto;
 import com.taras.shortway.client.model.Trip;
 import com.taras.shortway.client.model.User;
 
@@ -62,16 +61,6 @@ public class ApiService {
         return handleCall(userCall);
     }
 
-    public List<Auto> getAutos() {
-        Call<List<Auto>> autosListCall = apiInterface.getAutos();
-        return handleCall(autosListCall);
-    }
-
-    public Auto getAutoById(int id) {
-        Call<Auto> autoCall = apiInterface.getAutoById(id);
-        return handleCall(autoCall);
-    }
-
     public List<User> getUsers() {
         Call<List<User>> usersListCall = apiInterface.getUsers();
         return handleCall(usersListCall);
@@ -107,13 +96,13 @@ public class ApiService {
         return handleCall(driverCall);
     }
 
-    public Boolean addUser(User user) {
-        Call<Boolean> resultCall = apiInterface.addUser(user);
+    public User addUser(User user) {
+        Call<User> resultCall = apiInterface.addUser(user);
         return handleCall(resultCall);
     }
 
-    public Boolean editUser(User user) {
-        Call<Boolean> resultCall = apiInterface.editUser(user);
+    public User editUser(User user) {
+        Call<User> resultCall = apiInterface.editUser(user);
         return handleCall(resultCall);
     }
 

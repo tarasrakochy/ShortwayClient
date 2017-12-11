@@ -32,4 +32,25 @@ public class GoogleMapsUtils {
             return null;
         }
     }
+
+    public static String convertToString(String latLngString) {
+        String[] latLngStringArray = latLngString.split(",");
+        LatLng latLng = new LatLng(Double.parseDouble(latLngStringArray[0]), Double.parseDouble(latLngStringArray[1]));
+        try {
+            GeocodingApiRequest geocodingApiRequest = GeocodingApi
+                    .newRequest(new GeoApiContext.Builder()
+                            .apiKey(GOOGLE_API_KEY)
+                            .build())
+                    .language("uk")
+                    .latlng(latLng);
+            GeocodingResult[] results = geocodingApiRequest.await();
+            if (results.length == 0) {
+                return null;
+            } else {
+                return results[0].addressComponents[1] + " " + results[0].addressComponents[0];
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

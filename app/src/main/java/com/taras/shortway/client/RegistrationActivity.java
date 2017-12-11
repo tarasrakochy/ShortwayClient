@@ -14,6 +14,7 @@ import com.taras.shortway.client.model.LoginPass;
 import com.taras.shortway.client.model.User;
 import com.taras.shortway.client.model.UserInfo;
 import com.taras.shortway.client.model.enums.Gender;
+import com.taras.shortway.client.rest.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private Button acceptRegistrationButton;
+
+    private ApiService apiService = new ApiService(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +100,16 @@ public class RegistrationActivity extends AppCompatActivity {
                 loginPass.setPassword(passwordText);
                 user.setLoginPass(loginPass);
 
-                //TODO send user to server
-                //after success server response
-//                Toast.makeText(RegistrationActivity.this, R.string.user_registrated_info, Toast.LENGTH_SHORT).show();
-//
-//                Intent intent = new Intent(RegistrationActivity.this, UserProfileActivity.class);
-//                startActivity(intent);
+                User newUser = apiService.addUser(user);
+                if (newUser != null) {
+                    Globals.setUser(newUser);
+                    Toast.makeText(RegistrationActivity.this, R.string.user_registrated_info, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegistrationActivity.this, UserProfileActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(RegistrationActivity.this, R.string.registration_fail, Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -110,7 +117,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private List<Integer> getYearsOfBirth() {
         List<Integer> years = new ArrayList<>();
-        for (int i = 1999; i >=1917; i--) {
+        for (int i = 1999; i >= 1917; i--) {
             years.add(i);
         }
         return years;
