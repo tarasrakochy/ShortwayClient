@@ -1,6 +1,5 @@
 package com.taras.shortway.client;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,21 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.taras.shortway.client.model.Trip;
 import com.taras.shortway.client.model.User;
-import com.taras.shortway.client.model.UserInfo;
-import com.taras.shortway.client.model.enums.Gender;
 import com.taras.shortway.client.rest.ApiService;
 import com.taras.shortway.client.utils.GoogleMapsUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,9 +29,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ResultsTripsActivity extends AppCompatActivity {
 
-    private static final String EXTRA_KEY = "com.taras.shortway.client.ResultsTripsActivity.extra_key";
+    private static final String TRIP_KEY = "com.taras.shortway.client.ResultsTripsActivity.trip_key";
+    private static final String MAX_WAIT_TIME_KEY = "com.taras.shortway.client.ResultsTripsActivity.max_wait_time_key";
 
     private Trip trip;
+    private int maxWaitTime;
 
     private RecyclerView recyclerView;
 
@@ -55,61 +52,27 @@ public class ResultsTripsActivity extends AppCompatActivity {
 
         apiService = new ApiService(this);
 
-        trip = (Trip) getIntent().getSerializableExtra(EXTRA_KEY);
+        trip = (Trip) getIntent().getSerializableExtra(TRIP_KEY);
+        maxWaitTime = getIntent().getIntExtra(MAX_WAIT_TIME_KEY, 0);
 
         recyclerView = (RecyclerView) findViewById(R.id.find_trips_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<Trip> tripList = apiService.getTripsForConditions(trip);
+        List<Trip> tripList = apiService.getTripsForConditions(trip, maxWaitTime);
 
-//        List<Trip> tripList = new ArrayList<>();
-//
-//        Trip trip = new Trip();
-//        trip.setId(1);
-//        trip.setDate(new Date());
-//        trip.setFromPoint("Городоцька");
-//        trip.setToPoint("Наукова");
-//        tripList.add(trip);
-//
-//        Trip trip2 = new Trip();
-//        trip2.setId(2);
-//        trip2.setDate(new Date());
-//        trip2.setFromPoint("Кульпарківська");
-//        trip2.setToPoint("Зелена");
-//        tripList.add(trip2);
-//
         List<User> driverList = new ArrayList<>();
         for (Trip trip : tripList) {
             driverList.add(apiService.getDriver(trip.getId()));
         }
-//        User user = new User();
-//        user.setId(10);
-//        user.setEmail("email");
-//        user.setPhone("097");
-//        UserInfo userInfo = new UserInfo();
-//        userInfo.setId(1);
-//        userInfo.setGender(Gender.MALE);
-//        userInfo.setYear(1995);
-//        user.setUserInfo(userInfo);
-//        driverList.add(user);
-//
-//        User user2 = new User();
-//        user2.setId(11);
-//        user2.setEmail("email2");
-//        user2.setPhone("098");
-//        UserInfo userInfo1 = new UserInfo();
-//        userInfo1.setId(2);
-//        userInfo1.setYear(1986);
-//        user2.setUserInfo(userInfo1);
-//        driverList.add(user2);
-//
+
         RecyclerView.Adapter tripAdapter = new TripAdapter(tripList, driverList);
         recyclerView.setAdapter(tripAdapter);
 
     }
 
-    public static void sendDataToActivity(Intent intent, Trip trip) {
-        intent.putExtra(EXTRA_KEY, trip);
+    public static void sendDataToActivity(Intent intent, Trip trip, int maxWaitTime) {
+        intent.putExtra(TRIP_KEY, trip);
+        intent.putExtra(MAX_WAIT_TIME_KEY, maxWaitTime);
     }
 
     private class TripHolder extends RecyclerView.ViewHolder {
@@ -162,7 +125,9 @@ public class ResultsTripsActivity extends AppCompatActivity {
 
             if (user.getAvatar() != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
-                userAvatar.setImageBitmap(bitmap);
+                if (bitmap != null) {
+                    userAvatar.setImageBitmap(bitmap);
+                }
             }
         }
     }

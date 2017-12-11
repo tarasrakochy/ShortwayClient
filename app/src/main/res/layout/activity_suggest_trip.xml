@@ -29,7 +29,7 @@
                 android:id="@+id/from_field_suggest_trip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/from_field_find_trip_hint"/>
+                android:hint="@string/from_field_find_trip_hint" />
 
             <LinearLayout
                 android:id="@+id/transitional_layout"
@@ -41,7 +41,7 @@
                 android:id="@+id/to_field_suggest_trip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/to_field_find_trip_hint"/>
+                android:hint="@string/to_field_find_trip_hint" />
 
             <EditText
                 android:id="@+id/date_field_suggest_trip"
@@ -49,13 +49,13 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:editable="false"
-                android:hint="@string/date_field_find_trip_hint"/>
+                android:hint="@string/date_field_find_trip_hint" />
 
             <EditText
                 android:id="@+id/time_field_suggest_trip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/time_field_find_trip_hint"/>
+                android:hint="@string/time_field_find_trip_hint" />
 
             <EditText
                 android:id="@+id/price_field_suggest_trip"

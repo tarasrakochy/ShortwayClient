@@ -37,6 +37,7 @@ public class FindTripActivity extends AppCompatActivity {
         final EditText fromField = (EditText) findViewById(R.id.from_field_find_trip);
         final EditText toField = (EditText) findViewById(R.id.to_field_find_trip);
         final EditText timeField = (EditText) findViewById(R.id.time_field_find_trip);
+        final EditText maxWaitTimeField = (EditText) findViewById(R.id.max_wait_time_field_find_trip);
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -108,7 +109,7 @@ public class FindTripActivity extends AppCompatActivity {
                     trip.setDate(calendarDate);
 
                     Intent intent = new Intent(FindTripActivity.this, ResultsTripsActivity.class);
-                    ResultsTripsActivity.sendDataToActivity(intent, trip);
+                    ResultsTripsActivity.sendDataToActivity(intent, trip, Integer.parseInt(maxWaitTimeField.getText().toString()));
                     startActivity(intent);
                 } else {
                     if (fromPoint == null) {

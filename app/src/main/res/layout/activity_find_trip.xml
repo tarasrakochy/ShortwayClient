@@ -40,6 +40,13 @@
         android:layout_height="wrap_content"
         android:hint="@string/time_field_find_trip_hint"/>
 
+    <EditText
+        android:id="@+id/max_wait_time_field_find_trip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/max_wait_time_field_find_trip_hint"
+        android:inputType="number"/>
+
     <Button
         android:id="@+id/find_trip_for_parameters_button"
         android:layout_width="wrap_content"

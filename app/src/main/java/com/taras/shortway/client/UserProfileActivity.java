@@ -74,7 +74,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
         if (user.getAvatar() != null) {
             Bitmap bmp = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
-            avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, avatar.getWidth(), avatar.getHeight(), false));
+            if (bmp != null) {
+                avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, avatar.getWidth(), avatar.getHeight(), false));
+            }
         }
 
         phone.setText(user.getPhone());

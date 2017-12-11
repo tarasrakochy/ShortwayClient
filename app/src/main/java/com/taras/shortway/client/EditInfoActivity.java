@@ -74,13 +74,15 @@ public class EditInfoActivity extends AppCompatActivity {
         myselfInfo = (EditText) findViewById(R.id.myself_edit);
 
         choosePhotoButton = (Button) findViewById(R.id.choose_photo_button);
-        avatar = (CircleImageView) findViewById(R.id.avatar_profile);
+        avatar = (CircleImageView) findViewById(R.id.avatar_for_edit);
 
         saveChangesButton = (Button) findViewById(R.id.save_changes_button);
 
         if (user.getAvatar() != null) {
             Bitmap bmp = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
-            avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, avatar.getWidth(), avatar.getHeight(), false));
+            if (bmp != null) {
+                avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, avatar.getWidth(), avatar.getHeight(), false));
+            }
         }
 
         if (user.getUserInfo() != null) {

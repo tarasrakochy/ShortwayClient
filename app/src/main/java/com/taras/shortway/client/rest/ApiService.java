@@ -106,8 +106,8 @@ public class ApiService {
         return handleCall(resultCall);
     }
 
-    public List<Trip> getTripsForConditions(Trip trip) {
-        Call<List<Trip>> tripsListCall = apiInterface.getTripsForConditions(trip);
+    public List<Trip> getTripsForConditions(Trip trip, int maxWaitTime) {
+        Call<List<Trip>> tripsListCall = apiInterface.getTripsForConditions(trip, maxWaitTime);
         return handleCall(tripsListCall);
     }
 

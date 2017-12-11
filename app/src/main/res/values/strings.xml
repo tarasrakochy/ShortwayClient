@@ -22,6 +22,7 @@
     <string name="to_field_find_trip_hint">Куди</string>
     <string name="date_field_find_trip_hint">Дата</string>
     <string name="time_field_find_trip_hint">Час</string>
+    <string name="max_wait_time_field_find_trip_hint">Макс. час очікування (хвилини)</string>
     <string name="price_field_find_trip_hint">Ціна</string>
     <string name="pcount_field_find_trip_hint">Максимальна к-сть пасажирів</string>
     <string name="find_trip_for_parameters_button_text">Знайти поїздку</string>

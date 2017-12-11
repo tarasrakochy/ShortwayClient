@@ -45,7 +45,7 @@ public interface ApiInterface {
     Call<User> editUser(@Body User user);
 
     @POST("/trips/suitable")
-    Call<List<Trip>> getTripsForConditions(@Body Trip trip);
+    Call<List<Trip>> getTripsForConditions(@Body Trip trip, @Query("maxWaitTime") int maxWaitTime);
 
     @POST(value = "/trips/newtrip")
     Call<Boolean> addTrip(@Body Trip trip, @Query("userId") int userId);
