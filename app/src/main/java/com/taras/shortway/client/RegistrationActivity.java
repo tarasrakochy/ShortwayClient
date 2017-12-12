@@ -40,7 +40,7 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        setTitle("Реєсстрація");
+        setTitle("Реєстрація");
 
         gender = (AutoCompleteTextView) findViewById(R.id.gender);
         nameForRegistration = (EditText) findViewById(R.id.name_for_registration);

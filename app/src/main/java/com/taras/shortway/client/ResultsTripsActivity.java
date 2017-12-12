@@ -120,7 +120,7 @@ public class ResultsTripsActivity extends AppCompatActivity {
             dateInfoField.setText(new SimpleDateFormat("dd-MM-yyyy").format(trip.getDate()));
             timeInfoField.setText(new SimpleDateFormat("HH:mm").format(trip.getDate()));
             streetsInfoField.setText(GoogleMapsUtils.convertToString(trip.getFromPoint()) + " - " + GoogleMapsUtils.convertToString(trip.getToPoint()));
-            costInfoField.setText(trip.getPrice());
+            costInfoField.setText(trip.getPrice() + " грн");
             minUserInfo.setText(ResultsTripsActivity.this.getShortUserInfo(user));
 
             if (user.getAvatar() != null) {

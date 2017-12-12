@@ -47,7 +47,7 @@ public class GoogleMapsUtils {
             if (results.length == 0) {
                 return null;
             } else {
-                return results[0].addressComponents[1] + " " + results[0].addressComponents[0];
+                return results[0].addressComponents[1].shortName + " " + results[0].addressComponents[0].shortName;
             }
         } catch (Exception e) {
             return null;
